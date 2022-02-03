@@ -1,0 +1,16 @@
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "husky": ">=6",
+    "lerna": "^4.0.0",
+    "lint-staged": ">=10",
+    "prettier": "^2.5.1"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  }
+}
