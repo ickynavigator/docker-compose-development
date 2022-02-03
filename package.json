@@ -11,6 +11,11 @@
     "prettier": "^2.5.1"
   },
   "scripts": {
+    "start": "lerna run start",
+    "dev": "lerna run dev --parallel",
+    "lint": "eslint --cache --fix '**/*.+(js|jsx)'",
+    "test": "lerna run test --parallel",
+    "postinstall": "lerna bootstrap",
     "prepare": "husky install"
   }
 }
