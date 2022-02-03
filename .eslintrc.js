@@ -9,6 +9,17 @@ module.exports = {
     ecmaVersion: 13,
     sourceType: 'module',
   },
-  rules: {},
+  rules: {
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: '0',
+        jsx: '0',
+        ts: '0',
+        tsx: '0',
+      },
+    ],
+  },
   overrides: [],
 };
