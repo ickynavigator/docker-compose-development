@@ -21,6 +21,7 @@ services:
 
   back-end:
     container_name: back-end
+    command: yarn run dev
     build:
       context: ./packages/back-end
       dockerfile: BE.Dockerfile
@@ -29,6 +30,8 @@ services:
       - WAIT_HOSTS=mongodb:27017
     ports:
       - 3030:8080
+    volumes:
+      - ./packages/back-end:/src
     networks:
       - lib_api
 
