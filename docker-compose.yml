@@ -15,6 +15,7 @@ services:
     command: mongod
     volumes:
       - ./db-init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+      - ./mongo-data:/data/db
     networks:
       - lib_api
 
