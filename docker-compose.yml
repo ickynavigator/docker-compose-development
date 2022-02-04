@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  mongo:
+    container_name: mongo-db
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_DB}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_PASSWORD=${MONGO_PASSWORD}
+    ports:
+      - '27017-27019:27017-27019'
+    command: mongod
+    volumes:
+      - ./db-init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+    networks:
+      - lib_api
+
+networks:
+  lib_api:
+    driver: bridge
