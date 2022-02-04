@@ -2,7 +2,7 @@ import 'colors';
 import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
-// import { connectMONGO } from './db/conn.js';
+import { connectMONGO } from './db/conn.js';
 
 dotenv.config();
 
@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 const VERSION_NUMBER = process.env.VERSION || 'v1';
 const ENV = process.env.NODE_ENV || 'development';
 
-// connectMONGO();
+connectMONGO();
 const app = express();
 
 if (ENV === 'development') {
