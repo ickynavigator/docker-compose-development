@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   mongo:
-    container_name: mongo-db
+    container_name: mongodb
     image: mongo:latest
     environment:
       - MONGO_INITDB_DATABASE=${MONGO_DB}
@@ -31,7 +31,7 @@ services:
     ports:
       - 3030:8080
     volumes:
-      - ./packages/back-end:/src
+      - ./packages/back-end:/usr/src
     networks:
       - lib_api
 
