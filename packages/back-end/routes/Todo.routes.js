@@ -1,8 +1,19 @@
 import express from 'express';
-import { getAllTodos } from '../controllers/Todo.controller.js';
+import {
+  addNewTodo,
+  deleteTodoById,
+  getAllTodos,
+  getTodoById,
+  updateTodoById,
+} from '../controllers/Todo.controller.js';
 
 const router = express.Router();
 
-router.route('/').get(getAllTodos);
+router.route('/').get(getAllTodos).post(addNewTodo);
+router
+  .route('/:id')
+  .get(getTodoById)
+  .put(updateTodoById)
+  .delete(deleteTodoById);
 
 export default router;
