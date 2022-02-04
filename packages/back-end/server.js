@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 import { connectMONGO } from './db/conn.js';
+import routes from './routes/index.js';
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('API is running.....');
 });
+
+app.use(`/${VERSION_NUMBER}/api`, routes);
 
 app.listen(
   PORT,
