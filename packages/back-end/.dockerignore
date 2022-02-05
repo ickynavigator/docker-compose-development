@@ -1,2 +1,9 @@
-node_modules
-npm-debug.log
+.git/
+.gitignore
+**/.gitkeep
+**/.DS_Store
+.next/
+.dockerignore
+Dockerfile
+docker-compose.yml
+node_modules/
