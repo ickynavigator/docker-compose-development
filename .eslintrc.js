@@ -5,9 +5,11 @@ module.exports = {
     node: true,
   },
   extends: ['airbnb-base'],
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 13,
     sourceType: 'module',
+    requireConfigFile: false,
   },
   rules: {
     'import/extensions': [
@@ -21,5 +23,18 @@ module.exports = {
       },
     ],
   },
-  overrides: [],
+  overrides: [
+    {
+      files: ['packages/front-end/**/*.js', 'packages/front-end/**/*.jsx'],
+      extends: ['plugin:react/recommended'],
+      parserOptions: {
+        babelOptions: {
+          presets: ['@babel/preset-react'],
+        },
+      },
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
 };
