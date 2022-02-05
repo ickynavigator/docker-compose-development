@@ -1,8 +1,8 @@
 version: '3.1'
 
 services:
-  mongo:
-    container_name: mongodb
+  database:
+    container_name: database
     image: mongo
     environment:
       - MONGO_INITDB_DATABASE=${MONGO_DB}
@@ -23,12 +23,12 @@ services:
       dockerfile: BE.Dockerfile
     environment:
       - NODE_ENV=${NODE_ENV}
-      - MONGO_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DB}?retrywrites=true&w=majority
-      - WAIT_HOSTS=mongodb:27017
+      - MONGO_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@database:27017/${MONGO_DB}?retrywrites=true&w=majority
+      - WAIT_HOSTS=database:27017
     networks:
       - lib_api
     depends_on:
-      - mongo
+      - database
 
   front-end:
     container_name: front-end
