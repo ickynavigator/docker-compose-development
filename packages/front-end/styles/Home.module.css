@@ -50,3 +50,86 @@
   font-size: 4rem;
   text-align: center;
 }
+
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+  width: 100%;
+  flex-direction: column;
+}
+
+.addTodoButton {
+  border: none;
+  background-color: transparent;
+  font-size: inherit;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.addTodoButton:hover,
+.addTodoButton:active {
+  color: #0070f3;
+}
+
+.modalContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+}
+
+.modalTitlebar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 2rem;
+  align-items: center;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.modalContainer button {
+  border: none;
+  font-size: 4rem;
+  background-color: transparent;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.modalContainer button:hover,
+.modalContainer button:active {
+  color: red;
+}
+
+.modalContainer form {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalContainer td {
+  padding-bottom: 2rem;
+}
+
+.modalContainer td:nth-child(1) {
+  font-size: 1.5rem;
+  /* text-align: center; */
+  padding-right: 1rem;
+}
+
+.modalContainer input[type='text'],
+.modalContainer textarea {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.submitDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submitDiv input {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
