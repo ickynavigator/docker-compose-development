@@ -1,6 +1,26 @@
 services:
+  mongo:
+    ports:
+      - '27017-27019:27017-27019'
+
   back-end:
-    container_name: back-end
+    build:
+      context: ./packages/back-end
+      dockerfile: BE.dev.Dockerfile
     command: yarn run dev
     environment:
       - NODE_ENV=development
+    ports:
+      - 3030:8080
+    volumes:
+      - ./packages/back-end:/usr/src
+
+  front-end:
+    build:
+      context: ./packages/front-end
+      dockerfile: FE.dev.Dockerfile
+    command: yarn run dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./packages/front-end:/usr/src
