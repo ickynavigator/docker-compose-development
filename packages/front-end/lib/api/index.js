@@ -18,3 +18,14 @@ export const createNewTodo = async (data) => {
   const res = axios.post(url, data);
   return (await res).data;
 };
+
+export const deleteTodo = async (id) => {
+  const url = `${BASEURL}/todo/${id}`;
+  axios.delete(url);
+};
+
+export const toggleTodo = async (id) => {
+  const url = `${BASEURL}/todo/${id}/toggle`;
+  const res = axios.put(url);
+  return (await res).data;
+};

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import styles from '../../styles/todocard.module.css';
+import { deleteTodo, toggleTodo } from '../api';
 
 const index = ({ todo }) => {
-  const { title, message, resolved } = todo;
+  const {
+    _id: id, title, message, resolved,
+  } = todo;
   const [isResolved, setIsResolved] = useState(resolved);
   const [isDeleted, setIsDeleted] = useState(false);
 
@@ -12,10 +15,14 @@ const index = ({ todo }) => {
   const spanStyle = {
     color: isResolved ? 'green' : 'red',
   };
-  const toggleResolved = () => {
-    setIsResolved(!isResolved);
+
+  const toggleHandler = async () => {
+    const res = await toggleTodo(id);
+    if (res.todo) setIsResolved(res.todo.resolved);
   };
-  const deleteTodo = () => {
+
+  const deleteHandler = () => {
+    deleteTodo(id);
     setIsDeleted(true);
   };
 
@@ -31,10 +38,10 @@ const index = ({ todo }) => {
 
         <div className={styles.sidebar}>
           <div>
-            <button onClick={toggleResolved}>Resolve</button>
+            <button onClick={toggleHandler}>Toggle Status</button>
           </div>
           <div>
-            <button onClick={deleteTodo} className={styles.deleteBtn}>
+            <button onClick={deleteHandler} className={styles.deleteBtn}>
               Delete
             </button>
           </div>

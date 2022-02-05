@@ -52,10 +52,10 @@ const index = (props) => {
         message: message.trim(),
       };
 
-      const data = await createNewTodo(newTodo);
+      const res = await createNewTodo(newTodo);
       setmodalOpen(false);
-      if (data.todo) {
-        setTodos([...todos, data.todo]);
+      if (res.todo) {
+        setTodos([...todos, res.todo]);
       } else {
         setmodalError('The todo did not save. Please try again.');
       }
