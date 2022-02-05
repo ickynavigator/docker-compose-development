@@ -8,8 +8,6 @@ services:
       context: ./packages/back-end
       dockerfile: BE.dev.Dockerfile
     command: yarn run dev
-    environment:
-      - NODE_ENV=development
     ports:
       - 3030:8080
     volumes:

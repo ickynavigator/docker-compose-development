@@ -22,9 +22,9 @@ services:
       context: ./packages/back-end
       dockerfile: BE.Dockerfile
     environment:
-      - MONGO_URI=${MONGO_URI}
+      - NODE_ENV=${NODE_ENV}
+      - MONGO_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DB}?retrywrites=true&w=majority
       - WAIT_HOSTS=mongodb:27017
-      - NODE_ENV=production
     networks:
       - lib_api
     depends_on:
@@ -35,6 +35,9 @@ services:
     build:
       context: ./packages/front-end
       dockerfile: FE.Dockerfile
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - NEXT_PUBLIC_API_URL=http://back-end:8080
     networks:
       - nginx_server
     depends_on:
@@ -49,8 +52,10 @@ services:
       - 80:80
     networks:
       - nginx_server
+      - lib_api
     depends_on:
       - front-end
+      - back-end
 
 networks:
   nginx_server:
