@@ -90,7 +90,7 @@ export const getTodoById = asyncHandler(async (req, res) => {
 
 /**
  * @desc   Delete a Todo by id
- * @route  GET /api/todo/:id
+ * @route  DELETE /api/todo/:id
  * @access Public
  */
 export const deleteTodoById = asyncHandler(async (req, res) => {
@@ -110,7 +110,7 @@ export const deleteTodoById = asyncHandler(async (req, res) => {
 
 /**
  * @desc   Update a Todo by id
- * @route  POST /api/todo/:id
+ * @route  PUT /api/todo/:id
  * @access Public
  */
 export const updateTodoById = asyncHandler(async (req, res) => {
@@ -124,6 +124,28 @@ export const updateTodoById = asyncHandler(async (req, res) => {
         { key: 'message', value: message },
         { key: 'resolved', value: resolved },
       ]);
+
+      const updatedTodo = await todo.save();
+      return res.status(202).json({ todo: updatedTodo });
+    }
+
+    return res.status(404).json({ err: 'Todo not found' });
+  } catch (err) {
+    return res.status(400).json({ err: err.message });
+  }
+});
+
+/**
+ * @desc   Toggle a Todo by id
+ * @route  PUT /api/todo/:id/toggle
+ * @access Public
+ */
+export const toggleTodoById = asyncHandler(async (req, res) => {
+  try {
+    const todo = await Form.findById(req.params.id);
+
+    if (todo) {
+      todo.resolved = !todo.resolved;
 
       const updatedTodo = await todo.save();
       return res.status(202).json({ todo: updatedTodo });

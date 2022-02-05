@@ -4,6 +4,7 @@ import {
   deleteTodoById,
   getAllTodos,
   getTodoById,
+  toggleTodoById,
   updateTodoById,
 } from '../controllers/Todo.controller.js';
 
@@ -15,5 +16,6 @@ router
   .get(getTodoById)
   .put(updateTodoById)
   .delete(deleteTodoById);
+router.route('/:id/toggle').put(toggleTodoById);
 
 export default router;
