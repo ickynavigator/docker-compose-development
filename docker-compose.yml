@@ -21,13 +21,13 @@ services:
 
   back-end:
     container_name: back-end
-    command: yarn run dev
     build:
       context: ./packages/back-end
       dockerfile: BE.Dockerfile
     environment:
       - MONGO_URI=${MONGO_URI}
       - WAIT_HOSTS=mongodb:27017
+      - NODE_ENV=production
     ports:
       - 3030:8080
     volumes:
