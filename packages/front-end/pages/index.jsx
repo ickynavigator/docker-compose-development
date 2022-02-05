@@ -2,6 +2,7 @@ import Head from 'next/head';
 import React, { useState } from 'react';
 import { RiAddCircleLine, RiCloseCircleLine } from 'react-icons/ri';
 import Modal from 'react-modal';
+import { getAllTodos } from '../lib/api/index.js';
 import TodoCard from '../lib/components/TodoCard.jsx';
 import styles from '../styles/Home.module.css';
 
@@ -17,7 +18,19 @@ const modalStyles = {
 };
 Modal.setAppElement('#__next');
 
-const index = () => {
+export async function getServerSideProps(context) {
+  const pageSize = 10;
+  const pageNum = context.query.p || 1;
+
+  const data = await getAllTodos(pageNum, pageSize);
+
+  if (!data) return { notFound: true };
+  return { props: { ...data } };
+}
+
+const index = (props) => {
+  const { todos } = props;
+
   const [modalOpen, setmodalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
@@ -33,26 +46,6 @@ const index = () => {
     setmodalOpen(false);
   };
 
-  const todos = [
-    {
-      id: 1,
-      title: 'Learn Next.js',
-      message: 'This is a sample todo',
-      resolved: false,
-    },
-    {
-      id: 2,
-      title: 'Learn Next.js',
-      message: 'This is a sample todo',
-      resolved: true,
-    },
-    {
-      id: 3,
-      title: 'Learn Next.js',
-      message: 'This is a sample todo',
-      resolved: false,
-    },
-  ];
   return (
     <div className={styles.container}>
       <Head>
