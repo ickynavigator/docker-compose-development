@@ -37,7 +37,7 @@ services:
       dockerfile: FE.Dockerfile
     environment:
       - NODE_ENV=${NODE_ENV}
-      - NEXT_PUBLIC_API_URL=http://back-end:8080
+      - NEXT_PUBLIC_API_URL=http://nginx
     networks:
       - nginx_server
     depends_on:

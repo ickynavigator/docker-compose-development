@@ -24,12 +24,12 @@ app.get('/', (req, res) => {
   res.send('API is running.....');
 });
 
-app.use(`/${VERSION_NUMBER}/api`, routes);
+app.use(`/api/${VERSION_NUMBER}`, routes);
 
 app.listen(
   PORT,
   console.log(
-    `\nServer running in ${ENV} mode on port ${PORT} -> http://localhost:${PORT}/${VERSION_NUMBER}/api`
+    `\nServer running in ${ENV} mode on port ${PORT} -> http://localhost:${PORT}/api/${VERSION_NUMBER}`
       .yellow.bold,
   ),
 );
