@@ -11,6 +11,7 @@ export const getAllTodos = asyncHandler(async (req, res) => {
   try {
     const pageSize = Number(req.query.pageSize) || 10;
     const page = Number(req.query.pageNumber) || 1;
+    const paginate = req.query.paginate || 'true';
     const param = req.query.param || '';
     const regOpt = 'gim';
     let keyword = [{}];
@@ -28,12 +29,17 @@ export const getAllTodos = asyncHandler(async (req, res) => {
       }
     }
 
-    const todos = await Form.find({ $or: [...keyword] })
-      .limit(pageSize)
-      .skip(pageSize * (page - 1));
-
-    const count = await Form.countDocuments({ $or: [...keyword] });
-    const result = { todos, page, pages: Math.ceil(count / pageSize) };
+    let result = { todos: [] };
+    if (paginate.toLowerCase() === 'true') {
+      const todos = await Form.find({ $or: [...keyword] })
+        .limit(pageSize)
+        .skip(pageSize * (page - 1));
+      const count = await Form.countDocuments({ $or: [...keyword] });
+      result = { todos, page, pages: Math.ceil(count / pageSize) };
+    } else {
+      const todos = await Form.find({ $or: [...keyword] });
+      result = { todos };
+    }
 
     return res.status(200).json(result);
   } catch (err) {
