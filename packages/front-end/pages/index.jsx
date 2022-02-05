@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React, { useState } from 'react';
 import { RiAddCircleLine, RiCloseCircleLine } from 'react-icons/ri';
 import Modal from 'react-modal';
-import { getAllTodos } from '../lib/api/index.js';
+import { createNewTodo, getAllTodos } from '../lib/api/index.js';
 import TodoCard from '../lib/components/TodoCard.jsx';
 import styles from '../styles/Home.module.css';
 
@@ -29,21 +29,44 @@ export async function getServerSideProps(context) {
 }
 
 const index = (props) => {
-  const { todos } = props;
-
   const [modalOpen, setmodalOpen] = useState(false);
+  const [modalError, setmodalError] = useState('');
+
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
+  const [todos, setTodos] = useState(props.todos);
+
   const openModal = () => {
     setmodalOpen(true);
+    setmodalError('');
   };
 
   const afterOpenModal = () => {};
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (title.trim().length > 0 && message.trim().length > 0) {
+      const newTodo = {
+        title: title.trim(),
+        message: message.trim(),
+      };
+
+      const data = await createNewTodo(newTodo);
+      setmodalOpen(false);
+      if (data.todo) {
+        setTodos([...todos, data.todo]);
+      } else {
+        setmodalError('The todo did not save. Please try again.');
+      }
+    } else {
+      setmodalError('ALL FIELDS ARE REQUIRED.');
+    }
+  };
 
   const closeModal = () => {
     setmodalOpen(false);
+    setmodalError('');
   };
 
   return (
@@ -63,9 +86,10 @@ const index = (props) => {
         </h1>
 
         <div className={styles.grid}>
-          {todos.map((todo) => (
-            <TodoCard todo={todo} key={todo.id} />
-          ))}
+          {todos.map((todo) => {
+            const { _id: id } = todo;
+            return <TodoCard todo={todo} key={id} />;
+          })}
         </div>
       </main>
 
@@ -84,37 +108,45 @@ const index = (props) => {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} method="POST">
+          {modalError && (
+            <div className={`${styles.alert} ${styles.alertDanger}`}>
+              <p>{modalError}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
             <table>
-              <tr>
-                <td>
-                  <label htmlFor="Title">Title:</label>
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    id="Title"
-                    name="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label htmlFor="Message">Message:</label>
-                </td>
-                <td>
-                  <textarea
-                    name="Message"
-                    id="Message"
-                    cols="20"
-                    rows="10"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                  ></textarea>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>
+                    <label htmlFor="Title">Title:</label>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      id="Title"
+                      name="Title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label htmlFor="Message">Message:</label>
+                  </td>
+                  <td>
+                    <textarea
+                      name="Message"
+                      id="Message"
+                      cols="20"
+                      rows="10"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                    ></textarea>
+                  </td>
+                </tr>
+              </tbody>
             </table>
 
             <div className={styles.submitDiv}>
