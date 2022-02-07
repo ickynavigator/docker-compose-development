@@ -1,5 +1,5 @@
 services:
-  mongo:
+  database:
     ports:
       - '27017-27019:27017-27019'
 
