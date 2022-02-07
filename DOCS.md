@@ -17,8 +17,10 @@ Express <-> MongoDB
 
 Fill the environment variables with your credentials as stated in the env.example.
 
+Run Yarn to install dependencies
+
 To run the app in a development environment run the following command:
-`docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d`
+`yarn dev`
 
 To run the app in a production environment run the following command:
-`docker-compose -f docker-compose.yml up -d`
+`yarn prod`
